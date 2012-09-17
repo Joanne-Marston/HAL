@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+<style>
+#flipbook{
+    width: 800px;
+    height: 400px;
+}
+#flipbook .turn-page{
+    background-color:#ccc;
+}
+</style>
+</head>
+
+<body>
+	<button onclick="loadbook('BookTemplate.html')">Load Book</button>
+	<button onclick="enable('flip')">FlipBook</button>
+	<button onclick="enable('slide')">PageSlide</button>
+
+	<div id="bookarea">
+	</div>
+
+	<script src="scripts\jquery-1.8.1.min.js"></script>
+	<script src="scripts\turn.js\turn.js"></script> 
+	<script>
+		var handle;
+		var booktype="flip";
+		var currentbook=null;
+	
+		function enable(type)
+		{
+			booktype=type;
+			loadbook("null");
+		}
+	
+		function loadbook(book)
+		{
+			if (book!="null")
+			{
+				currentbook=book;
+			}
+			
+			$(document).unbind("mousemove");
+			$(document).unbind("mouseup");
+			clearInterval(handle);
+			$("#bookarea").empty();
+			
+			$('#bookarea').load('fetchbook.php', {"book":currentbook}, function(response, status, xhr) 
+			{
+				if (status!="error") 
+				{
+					if (booktype=="flip")
+					{
+						$('#flipbook').turn({gradients: true, acceleration: true});
+					}
+					else if (booktype=="slide")
+					{
+						alert("slide enabled");
+					}
+				}
+			});
+			
+			$(document).bind('keydown', function(e){
+				if (e.keyCode==37)
+					$('#flipbook').turn('previous');
+				else if (e.keyCode==39)
+					$('#flipbook').turn('next');
+			});
+		}
+	</script>
+
+</body>
+</html>

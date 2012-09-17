@@ -1,24 +1,5 @@
-<!DOCTYPE html>
-<style>
-#flipbook{
-    width: 800px;
-    height: 400px;
-}
-#flipbook .turn-page{
-    background-color:#ccc;
-}
-</style>
-<div>
-	<div id='flipbook'>
-		<div> Page 1 </div>
-		<div> Page 2 </div>
-		<div> Page 3 </div>
-	</div>
+<div id='flipbook'>
+	<div> Page 1 </div>
+	<div> Page 2 </div>
+	<div> Page 3 </div>
 </div>
-
-<script src="scripts\jquery-1.8.1.min.js"></script>
-<script src="scripts\turn.js\turn.js"></script> 
-<script>
-$('#flipbook').turn({gradients: true, acceleration: true});
-</script>
-</html>
