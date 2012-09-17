@@ -1919,6 +1919,7 @@ $.extend($.fn, {
 
 			data.effect = point;
 			data.effect.handle = setInterval(f, fps);
+			handle = data.effect.handle;
 			this.data(data);
 			f();
 		} else {
