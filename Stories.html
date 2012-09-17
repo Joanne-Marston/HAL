@@ -8,6 +8,32 @@
 #flipbook .turn-page{
     background-color:#ccc;
 }
+	
+#viewport{
+	position: relative;
+	width: 300px;
+	height: 225px;
+	margin: 0px;
+	overflow: hidden;
+} 
+
+#mouseSwipe{
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	position: relative;
+	width: 300px;
+	height: 225px;
+	margin: 0px;
+	cursor: move;
+}
+.panel {
+	margin: 0px;
+	padding: 0px;
+	width: 300px;
+	height: 225px;
+	background-color: silver;
+	overflow: hidden;
+}
 </style>
 </head>
 
@@ -21,10 +47,12 @@
 
 	<script src="scripts\jquery-1.8.1.min.js"></script>
 	<script src="scripts\turn.js\turn.js"></script> 
+	<script src="scripts\mouseSwipe\jquery.mouseSwipe.1.0.2.min.js"></script>
 	<script>
 		var handle;
 		var booktype="flip";
 		var currentbook=null;
+		var currentpage=1;
 	
 		function enable(type)
 		{
@@ -42,30 +70,61 @@
 			$(document).unbind("mousemove");
 			$(document).unbind("mouseup");
 			clearInterval(handle);
-			$("#bookarea").empty();
 			
-			$('#bookarea').load('fetchbook.php', {"book":currentbook}, function(response, status, xhr) 
+			if (booktype=="flip")
 			{
-				if (status!="error") 
+				try
 				{
-					if (booktype=="flip")
+					currentpage=$('#flipbook').turn('page');
+				}
+				catch (err)
+				{
+					
+				}
+				
+				$("#bookarea").empty();
+				$('#bookarea').append("<div id='flipbook'></div>");
+				$('#flipbook').load('fetchbook.php', {"book":currentbook}, function(response, status, xhr) 
+				{
+					if (status!="error") 
 					{
 						$('#flipbook').turn({gradients: true, acceleration: true});
+						$('#flipbook').turn('page', currentpage);
 					}
-					else if (booktype=="slide")
+				});
+			}
+			else if (booktype=="slide")
+			{
+				$("#bookarea").empty();
+				$('#bookarea').append("<div id='viewport' onselectstart='return false;'><div id='mouseSwipe'></div></div>");
+				$('#mouseSwipe').load('fetchbook.php', {"book":currentbook}, function(response, status, xhr) 
+				{
+					if (status!="error") 
 					{
-						alert("slide enabled");
+						$(document).bind("dragstart", function() { return false; });
+
+						$('#mouseSwipe').swipe({
+						TYPE: 'panelSwipe',
+						HORIZ: true,
+						SNAPDISTANCE: 20,
+						DURATION: 250,
+						//EASING: 'swing',
+						ARROWS: true,
+						FADEARROWS: true,
+						});
 					}
-				}
-			});
-			
-			$(document).bind('keydown', function(e){
-				if (e.keyCode==37)
-					$('#flipbook').turn('previous');
-				else if (e.keyCode==39)
-					$('#flipbook').turn('next');
-			});
+				});
+				
+			}
 		}
+			
+		$(document).bind('keydown', function(e){
+			if (e.keyCode==37)
+				$('#flipbook').turn('previous');
+			else if (e.keyCode==39)
+				$('#flipbook').turn('next');
+		});
+	
 	</script>
 
 </body>
