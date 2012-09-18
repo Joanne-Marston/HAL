@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <head>
 <style>
+body
+{
+	margin:0;
+	border: 0;
+	padding: 0;
+}
+
 #flipbook{
     width: 800px;
     height: 400px;
@@ -8,114 +15,153 @@
 #flipbook .turn-page{
     background-color:#ccc;
 }
-	
-#viewport{
-	position: relative;
-	width: 300px;
-	height: 225px;
-	margin: 0px;
-	overflow: hidden;
-} 
 
-#mouseSwipe{
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	position: relative;
-	width: 300px;
-	height: 225px;
-	margin: 0px;
-	cursor: move;
-}
-.panel {
-	margin: 0px;
-	padding: 0px;
-	width: 300px;
-	height: 225px;
-	background-color: silver;
-	overflow: hidden;
+
+
+#content
+{
+	visibility:hidden;
 }
 </style>
 </head>
 
 <body>
 	<button onclick="loadbook('BookTemplate.html')">Load Book</button>
-	<button onclick="enable('flip')">FlipBook</button>
-	<button onclick="enable('slide')">PageSlide</button>
-
+	<button id="flip" onclick="toggleview('flip')">FlipBook</button>
+	<button id="slide" onclick="toggleview('slide')">PageSlide</button>
+	
 	<div id="bookarea">
+		
 	</div>
-
-	<script src="scripts\jquery-1.8.1.min.js"></script>
-	<script src="scripts\turn.js\turn.js"></script> 
-	<script src="scripts\mouseSwipe\jquery.mouseSwipe.1.0.2.min.js"></script>
+	
+	<div id="content">
+	</div>
+	
+	<script  type="text/javascript" src="scripts/jquery-1.8.1.min.js"></script>
+	<script  type="text/javascript" src="scripts/turn.js/turn.js"></script> 
+	<script  type="text/javascript" src="scripts/jquery.event.swipe/js/jquery.event.swipe.js"></script>
+	<script  type="text/javascript" src="scripts/jquery.event.move/js/jquery.event.move.js"></script>
+	
 	<script>
 		var handle;
-		var booktype="flip";
-		var currentbook=null;
-		var currentpage=1;
+		var currentpage=0;
 	
-		function enable(type)
+		function toggleview(type)
 		{
-			booktype=type;
-			loadbook("null");
+			if (type=="flip")
+			{			
+				$('#bookarea').empty();
+				
+				$('#bookarea').append($('#content').clone().attr('id', 'flipbook'));
+				
+				$('#flipbook').turn({gradients: true, acceleration: true, display: 'single'});
+				$('#flipbook').turn('page', currentpage+1);
+				
+				$('#flip').attr("disabled", "disabled");
+				$('#slide').removeAttr("disabled");
+				
+				$("LINK[href='stylesheets/slidebook.css']").remove();
+			}
+			else
+			{
+				$(document).unbind("mousemove");
+				$(document).unbind("mouseup");
+				clearInterval(handle);
+				currentpage=$('#flipbook').turn('page')-1;
+				
+				$('#bookarea').empty();
+				
+				$('#bookarea').append($('#content').clone().attr('id', 'slidebook'));
+				
+				var wrap=jQuery('#slidebook'),
+				    slides=wrap.find('.panel'),
+					width=wrap.width();
+				
+				$('#panel'+currentpage).addClass('active');
+				
+				slides.on('swipeleft', function(e) 
+				{
+					if (currentpage === slides.length - 1) { return; }
+					slides.eq(currentpage + 1).trigger('activate');
+				})
+				.on('swiperight', function(e) 
+				{
+					if (currentpage === 0) { return; }
+					slides.eq(currentpage - 1).trigger('activate');
+				})
+				.on('activate', function(e) 
+				{
+					slides.eq(currentpage).removeClass('active');
+
+					jQuery(e.target).addClass('active');
+
+					// Update the active slide index
+					currentpage = slides.index(e.target);
+				})
+				.on('movestart', function(e) 
+				{
+					// If the movestart heads off in a upwards or downwards
+					// direction, prevent it so that the browser scrolls normally.
+					if ((e.distX > e.distY && e.distX < -e.distY) ||
+					    (e.distX < e.distY && e.distX > -e.distY)) {
+						e.preventDefault();
+						return;
+					}
+
+					// To allow the slide to keep step with the finger,
+					// temporarily disable transitions.
+					wrap.addClass('notransition');
+				})
+				.on('move', function(e) 
+				{
+					var left = 100 * e.distX / width;
+
+					// Move slides with the finger
+					if (e.distX < 0) {
+						if (slides[currentpage+1]) {
+							slides[currentpage].style.left = left + '%';
+							slides[currentpage+1].style.left = (left+100)+'%';
+						}
+						else {
+							slides[currentpage].style.left = left/4 + '%';
+						}
+					}
+					if (e.distX > 0) {
+						if (slides[currentpage-1]) {
+							slides[currentpage].style.left = left + '%';
+							slides[currentpage-1].style.left = (left-100)+'%';
+						}
+						else {
+							slides[currentpage].style.left = left/5 + '%';
+						}
+					}
+				})
+				.on('moveend', function(e) 
+				{
+					wrap.removeClass('notransition');
+					
+					slides[currentpage].style.left = '';
+		
+					if (slides[currentpage+1]) {
+						slides[currentpage+1].style.left = '';
+					}
+					if (slides[currentpage-1]) {
+						slides[currentpage-1].style.left = '';
+					}
+				});
+
+				$('#slide').attr("disabled", "disabled");
+				$('#flip').removeAttr("disabled");
+				
+				$('head').append('<link rel="stylesheet" type="text/css" href="stylesheets/slidebook.css"/>');
+				
+				
+			}
 		}
 	
 		function loadbook(book)
 		{
-			if (book!="null")
-			{
-				currentbook=book;
-			}
-			
-			$(document).unbind("mousemove");
-			$(document).unbind("mouseup");
-			clearInterval(handle);
-			
-			if (booktype=="flip")
-			{
-				try
-				{
-					currentpage=$('#flipbook').turn('page');
-				}
-				catch (err)
-				{
-					
-				}
-				
-				$("#bookarea").empty();
-				$('#bookarea').append("<div id='flipbook'></div>");
-				$('#flipbook').load('fetchbook.php', {"book":currentbook}, function(response, status, xhr) 
-				{
-					if (status!="error") 
-					{
-						$('#flipbook').turn({gradients: true, acceleration: true});
-						$('#flipbook').turn('page', currentpage);
-					}
-				});
-			}
-			else if (booktype=="slide")
-			{
-				$("#bookarea").empty();
-				$('#bookarea').append("<div id='viewport' onselectstart='return false;'><div id='mouseSwipe'></div></div>");
-				$('#mouseSwipe').load('fetchbook.php', {"book":currentbook}, function(response, status, xhr) 
-				{
-					if (status!="error") 
-					{
-						$(document).bind("dragstart", function() { return false; });
-
-						$('#mouseSwipe').swipe({
-						TYPE: 'panelSwipe',
-						HORIZ: true,
-						SNAPDISTANCE: 20,
-						DURATION: 250,
-						//EASING: 'swing',
-						ARROWS: true,
-						FADEARROWS: true,
-						});
-					}
-				});
-				
-			}
+			$('#content').load('fetchbook.php', {"book":book}); 
 		}
 			
 		$(document).bind('keydown', function(e){
