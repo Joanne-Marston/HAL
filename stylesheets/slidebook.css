@@ -1,7 +1,13 @@
-#bookarea > #slidebook {
-	margin-bottom: 1em;
-	margin-left: -8px;
-	margin-right: -8px;
+#slidebook {
+	position: relative;
+	margin: 25px auto;
+	padding:0;
+	border:0;
+    width: 90%;
+    height: 90%;
+	background-color: #444;
+	overflow: hidden;
+	display: block
 }
 
 .even
@@ -59,13 +65,5 @@
 }
 
 .panel.active ~ .panel {
-left: 100%;
-}
-
-#slidebook {
-width: 600px;
-height: 225px;
-border: 8px solid #333;
-background-color: #444;
-overflow: hidden;
+	left: 100%;
 }

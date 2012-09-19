@@ -1,0 +1,9 @@
+#flipbook{
+	position: absolute;
+	margin: 20px auto;
+    width: 90%;
+    height: 90%;
+}
+#flipbook .turn-page{
+    background-color:#ccc;
+}
