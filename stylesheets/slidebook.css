@@ -3,6 +3,17 @@
 	margin-left: -8px;
 	margin-right: -8px;
 }
+
+.even
+{
+	float:right;
+}
+
+.odd
+{
+	float:left;
+}
+
 	
 .panel{
 	display: inline-block;
@@ -52,7 +63,7 @@ left: 100%;
 }
 
 #slidebook {
-width: 300px;
+width: 600px;
 height: 225px;
 border: 8px solid #333;
 background-color: #444;

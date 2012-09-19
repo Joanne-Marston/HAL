@@ -52,22 +52,39 @@ body
 			{			
 				$('#bookarea').empty();
 				
-				$('#bookarea').append($('#content').clone().attr('id', 'flipbook'));
+				$('#bookarea').append("<div id='flipbook'></div>");
+				$('#flipbook').append($('.clone').clone());
 				
-				$('#flipbook').turn({gradients: true, acceleration: true, display: 'single'});
-				$('#flipbook').turn('page', currentpage+1);
+				$('#flipbook').turn({gradients: true, acceleration: true});
+				$('#flipbook').turn('page', currentpage*2);
 				
 				$('#flip').attr("disabled", "disabled");
 				$('#slide').removeAttr("disabled");
 				
 				$("LINK[href='stylesheets/slidebook.css']").remove();
+				
+				$(document).unbind('keydown');
+				$(document).bind('keydown', function(e){
+				if (e.keyCode==37)
+					$('#flipbook').turn('previous');
+				else if (e.keyCode==39)
+					$('#flipbook').turn('next');
+				});
 			}
 			else
 			{
 				$(document).unbind("mousemove");
 				$(document).unbind("mouseup");
 				clearInterval(handle);
-				currentpage=$('#flipbook').turn('page')-1;
+				if ($('#flipbook').turn('page')%2==0)
+				{
+					currentpage=$('#flipbook').turn('page')/2;
+				}
+				else
+				{
+					currentpage=($('#flipbook').turn('page')-1)/2;
+				}
+				
 				
 				$('#bookarea').empty();
 				
@@ -155,7 +172,13 @@ body
 				
 				$('head').append('<link rel="stylesheet" type="text/css" href="stylesheets/slidebook.css"/>');
 				
-				
+				$(document).unbind('keydown');
+				$(document).bind('keydown', function(e){
+				if (e.keyCode==37)
+					slides.eq(currentpage).trigger('swiperight');
+				else if (e.keyCode==39)
+					slides.eq(currentpage).trigger('swipeleft');
+				});
 			}
 		}
 	
@@ -164,12 +187,6 @@ body
 			$('#content').load('fetchbook.php', {"book":book}); 
 		}
 			
-		$(document).bind('keydown', function(e){
-			if (e.keyCode==37)
-				$('#flipbook').turn('previous');
-			else if (e.keyCode==39)
-				$('#flipbook').turn('next');
-		});
 	
 	</script>
 
