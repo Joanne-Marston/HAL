@@ -1,12 +1,6 @@
 var handle;
 var currentpage=0;
 
-$(window).resize(function() {
-	$('#bookarea').css('height',($('#bookwrapper').innerHeight()-50)+'px');
-	$('#flipbook').css('height', '90%');
-});
-$('#bookarea').css('height',($('#bookwrapper').innerHeight()-50)+'px');
-
 function toggleview(type)
 {
 	if (type=="flip")
