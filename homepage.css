@@ -26,7 +26,13 @@ body
 {
 	color: white;
 	margin: 0 auto;
-	width: 60%;
+	width: 65%;
+}
+
+h1
+{
+	-webkit-margin-before: 1%;
+	-webkit-margin-after: 1%;
 }
 
 #links 
@@ -39,7 +45,7 @@ body
 #links a img
 {
 	float: left;
-	margin: 7% 4% 0 4%;
-	width:25%;
+	margin: 2% 7% 0 6%;
+	width:200px;
 	height: 200px;
 }

@@ -7,13 +7,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="maze.svg"
-   inkscape:version="0.48.2 r9819"
-   version="1.1"
-   id="svg3217"
-   height="100%"
+   viewBox="0 0 300.00001 300"
    width="100%"
-   viewBox="0 0 199.99999 199.99999">
+   height="100%"
+   id="svg3217"
+   version="1.1"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="C:\wamp\www\maze.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -27,9 +27,9 @@
      inkscape:window-height="706"
      id="namedview3447"
      showgrid="false"
-     inkscape:zoom="2.0193729"
-     inkscape:cx="74.780871"
-     inkscape:cy="86.551623"
+     inkscape:zoom="2.8558246"
+     inkscape:cx="84.709769"
+     inkscape:cy="108.37688"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -151,42 +151,6 @@
          in2="result91"
          mode="multiply" />
     </filter>
-    <clipPath
-       id="clipPath">
-      <path
-         inkscape:connector-curvature="0"
-         d="m 210.99912,205.98077 c 14.86275,0 26.98165,-12.09487 26.98165,-27.02483 l 0,-171.9578231 c 0,-14.9297027 -12.1189,-26.9788769 -26.98165,-26.9788769 l -171.998027,0 c -14.931487,0 -26.981862,12.0491742 -26.981862,26.9788769 l 0,171.9578231 c 0,14.92996 12.050375,27.02483 26.981862,27.02483 l 171.998027,0 z"
-         style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:9.03846169;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-         id="path4826-4" />
-    </clipPath>
-    <filter
-       id="filter"
-       height="2.0"
-       width="2.0"
-       x="-0.5"
-       y="-0.5">
-      <feGaussianBlur
-         stdDeviation="5.0"
-         id="feGaussianBlur12644" />
-    </filter>
-    <clipPath
-       id="clipPathZ">
-      <path
-         id="path4010-7-7"
-         style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;display:inline"
-         d="M 220.14796,218 C 236.59186,218 250,204.61843 250,188.10017 L 250,-2.1510431 C 250,-18.669014 236.59186,-32.000014 220.14796,-32.000014 l -190.29569,0 C 13.33233,-32.000014 0,-18.669014 0,-2.1510431 L 0,188.10017 C 0,204.61843 13.33233,218 29.85227,218 l 190.29569,0 z"
-         inkscape:connector-curvature="0" />
-    </clipPath>
-    <filter
-       y="-0.5"
-       x="-0.5"
-       width="2.0"
-       height="2.0"
-       id="filtern">
-      <feGaussianBlur
-         id="feGaussianBlur12817"
-         stdDeviation="5.0" />
-    </filter>
   </defs>
   <title
      id="title3227" />
@@ -202,20 +166,20 @@ Typeface is Tuffy (public domain, created by Thatcher Ulrich) from openfontlibra
 </rdf:RDF>
 </metadata>
   <g
-     transform="translate(0,-667.00004)"
+     transform="translate(50.554115,-618.75929)"
      inkscape:label="bottom"
      id="layer1"
      inkscape:groupmode="layer" />
   <g
-     transform="translate(0,-667.00004)"
+     transform="translate(50.554115,-618.75929)"
      inkscape:label="top"
      id="layer2"
      inkscape:groupmode="layer">
     <g
-       transform="matrix(0.8,0,0,0.79999996,0,692.60004)"
+       transform="matrix(0.8,0,0,0.79999996,-50.554115,744.3593)"
        id="g4828-1">
       <path
-         id="path12824"
+         id="path4010-7-7"
          style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;display:inline"
          d="M 220.14796,218 C 236.59186,218 250,204.61843 250,188.10017 L 250,-2.1510431 C 250,-18.669014 236.59186,-32.000014 220.14796,-32.000014 l -190.29569,0 C 13.33233,-32.000014 0,-18.669014 0,-2.1510431 L 0,188.10017 C 0,204.61843 13.33233,218 29.85227,218 l 190.29569,0 z"
          inkscape:connector-curvature="0" />
@@ -223,56 +187,12 @@ Typeface is Tuffy (public domain, created by Thatcher Ulrich) from openfontlibra
          inkscape:connector-curvature="0"
          d="m 210.99912,205.98077 c 14.86275,0 26.98165,-12.09487 26.98165,-27.02483 l 0,-171.9578231 c 0,-14.9297027 -12.1189,-26.9788769 -26.98165,-26.9788769 l -171.998027,0 c -14.931487,0 -26.981862,12.0491742 -26.981862,26.9788769 l 0,171.9578231 c 0,14.92996 12.050375,27.02483 26.981862,27.02483 l 171.998027,0 z"
          style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:9.03846169;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-         id="path12652" />
-      <g
-         clip-path="url(#clipPath)"
-         id="g12654">
-        <g
-           id="g12656">
-          <path
-             inkscape:connector-curvature="0"
-             d="M237.98077 6.9981169C237.98077 -7.9315858 225.86187 -19.98076 210.99912 -19.98076M210.99912 -19.98076L39.001093 -19.98076M39.001093 -19.98076C24.069606 -19.98076 12.019231 -7.9315858 12.019231 6.9981169"
-             style="fill:none;stroke:#ffffff;stroke-opacity:1;stroke-width:10;filter:url(#filter);"
-             id="path12658" />
-          <path
-             inkscape:connector-curvature="0"
-             d="M237.98077 178.95594L237.98077 6.9981169M12.019231 6.9981169L12.019231 178.95594"
-             style="fill:none;stroke:#808080;stroke-opacity:1;stroke-width:10;filter:url(#filter);"
-             id="path12660" />
-          <path
-             inkscape:connector-curvature="0"
-             d="M210.99912 205.98077C225.86187 205.98077 237.98077 193.8859 237.98077 178.95594M12.019231 6.9981169L12.019231 178.95594M12.019231 178.95594C12.019231 193.8859 24.069606 205.98077 39.001093 205.98077M39.001093 205.98077L210.99912 205.98077"
-             style="fill:none;stroke:#000000;stroke-opacity:1;stroke-width:10;filter:url(#filter);"
-             id="path12662" />
-        </g>
-      </g>
-      <g
-         id="g12832"
-         clip-path="url(#clipPathZ)">
-        <g
-           id="g12834">
-          <path
-             id="path12836"
-             style="fill:none;stroke:#ffffff;stroke-opacity:1;stroke-width:10;filter:url(#filtern);"
-             d="M250.0 -2.1510431C250.0 -18.669014 236.59186 -32.000014 220.14796 -32.000014M220.14796 -32.000014L29.85227 -32.000014M29.85227 -32.000014C13.33233 -32.000014 0.0 -18.669014 0.0 -2.1510431"
-             inkscape:connector-curvature="0" />
-          <path
-             id="path12838"
-             style="fill:none;stroke:#808080;stroke-opacity:1;stroke-width:10;filter:url(#filtern);"
-             d="M250.0 188.10017L250.0 -2.1510431M0.0 -2.1510431L0.0 188.10017"
-             inkscape:connector-curvature="0" />
-          <path
-             id="path12840"
-             style="fill:none;stroke:#000000;stroke-opacity:1;stroke-width:10;filter:url(#filtern);"
-             d="M220.14796 218.0C236.59186 218.0 250.0 204.61843 250.0 188.10017M0.0 -2.1510431L0.0 188.10017M0.0 188.10017C0.0 204.61843 13.33233 218.0 29.85227 218.0M29.85227 218.0L220.14796 218.0"
-             inkscape:connector-curvature="0" />
-        </g>
-      </g>
+         id="path4826-4" />
     </g>
     <g
        id="text3881"
        style="font-size:40.13545609px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Raavi;-inkscape-font-specification:Raavi Bold"
-       transform="matrix(0.77866968,0,0,0.68492884,0,289.00003)">
+       transform="matrix(0.77866968,0,0,0.68492884,-50.554115,340.75929)">
       <path
          id="path3038"
          d="m 108.47402,593.25876 -8.05453,0 0,21.41995 -4.840557,0 0,-21.41995 -8.015333,0 0,-4.4486 20.91042,0 z"
@@ -291,7 +211,7 @@ Typeface is Tuffy (public domain, created by Thatcher Ulrich) from openfontlibra
          inkscape:connector-curvature="0" />
     </g>
     <g
-       transform="matrix(0.8,0,0,0.66666664,198.5283,151.16504)"
+       transform="matrix(0.8,0,0,0.66666664,147.97418,202.9243)"
        style="fill:none"
        id="g5602">
       <path
