@@ -1,0 +1,18 @@
+Book views
+
+CSS to make everything look nice
+Menu bar at the top - buttons for - switching views, dictionary, sharing, searching, overview?
+Menu at the bottom - links to each set of pages
+
+
+Stories
+Go to the library to get those books 
+work out how to automatically turn book text into the required format - making pages, etc
+work out how to flag each page for a term to match to something in the database
+
+
+
+Workspace
+create the slide out panel
+make it droppable and things draggable
+ensure it saves things

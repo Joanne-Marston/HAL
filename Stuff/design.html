@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<head>
+	<link rel="stylesheet" type="text/css" href="design.css"/>
+	<link rel='stylesheet' href='scripts/spectrum/spectrum.css' />
+	<link rel="stylesheet" type="text/css" href="stylesheets/slidebook.css"/>
+	<link type="text/css" rel="stylesheet" href="scripts/jquery-multi-open-accordion/css/jquery-ui-1.8.9.custom/jquery-ui-1.8.9.custom.css" />
+</head>
+
+<body>
+	<div id="menubar">
+		<a href="homepage.html"><img id="homelink" src="heading.svg" alt="" /></a>
+		<a href="Stories.html"><img src="book.svg" alt="" /></a>
+		<a href=""><img src="maze.svg" alt="" /></a>
+		<a href=""><img src="explore.svg" alt="" /></a>
+	</div>
+	
+
+	<div id="wrapper">
+		<div id="sidebar">
+			<input type='text' id='projectname'>
+			
+			<button onclick="format('undo');">Undo</button>
+			
+			<div id="multiAccordion">
+				<h3><a href="#">Background</a></h3>
+				<div>
+					<div>Background Colour: <input type='text' id="bgcolour" /></div>
+					<div>Page Colour: <input type='text' id="pagecolour" /></div>
+				</div>
+				<h3><a href="#">Text</a></h3>
+				<div>
+					<button onclick="format('bold');">Bold</button>
+					<button onclick="format('italic');">Italic</button>
+					<button onclick="format('underline');">Underline</button>
+					<button onclick="format('forecolor','red');" >Text colour</button>
+					
+				</div>
+				<h3><a href="#">Pictures</a></h3>
+				<div>
+					<button onclick="format('insertimage', 'images/01.jpg')" >Insert picture</button>
+				</div>
+				<h3><a href="#">Pages</a></h3>
+				<div>
+					<button onclick="format('inserthtml', ' ------------Page-Break------------ ')" >Page break</button>
+				</div>
+			</div>
+		</div>
+		
+		<div id="display-area">
+				<div id="bookmenubar">
+					<button id="Load" onclick="display()">FlipBook</button>
+				</div>
+				<div id="bookarea">
+					<div id="book">
+
+					</div>
+				</div>
+			
+		</div>
+	</div>
+
+	<script type="text/javascript" src="scripts/jquery-1.8.1.min.js"></script>
+	<script type="text/javascript" src='scripts/spectrum/spectrum.js'></script>
+	<script type="text/javascript" src="scripts/jquery-multi-open-accordion/jquery-ui-1.8.13.custom.min.js"></script>
+	<script type="text/javascript" src="scripts/jquery-multi-open-accordion/jquery.multi-accordion-1.5.3.js"></script>
+	<script type="text/javascript" src="scripts/carouFredSel-6.0.2/carouFredSel-6.0.2/jquery.carouFredSel-6.0.2.js"></script>
+	
+	<script>
+		var text;
+		var pageheight=500;
+		var pagewidth=500;
+		var actions=new Array();
+	
+		$.get('fetchbook.php', {"book":"Story19-Dai-lioness-children.txt"}, function(data){
+			text=data;
+		});
+		
+		function display()
+		{
+			createpages();
+		}
+		
+		function createpages()
+		{
+			var words=text.split(' ');
+			var begin=0;
+			var numpages;
+			
+			$('#display-area').append("<div id='content'></div>");
+			$('#content').css('height', pageheight);
+			$('#content').css('width', pagewidth);
+			
+			$.each(words, function(index, element){
+				$('#content').append(element+' ');
+
+				if ($('#content').prop('scrollHeight')>$('#content').prop('clientHeight'))
+				{
+					var pagetext=words.slice(begin, index);
+					$('#book').append('<div contentEditable="true" spellcheck="true">'+pagetext.join(' ')+'</div>');
+					begin=index;
+					$('#content').empty();
+					$('#content').append(element+' ');
+					
+				}
+			
+			});
+
+			var pagetext=words.slice(begin, words.length);
+			$('#book').append('<div contentEditable="true" spellcheck="true">'+pagetext.join(' ')+'</div>');
+			$('#content').remove();
+			
+			$("#book").carouFredSel({
+			circular: false,
+			infinite: false,
+			items: {
+				visible: 2,
+				minimum: 0,
+			},
+			auto: false,
+			prev: "left",
+			next: "right"
+			});
+			
+			 
+		}
+		
+		function pagebreak()
+		{
+			var newtext="";
+			
+			$('#book div').each(function(){
+				newtext=newtext +" "+$(this).html();
+			});
+			
+			$('#book').empty();
+			
+			var words=newtext.split(' ');
+			var begin=0;
+			var numpages;
+			
+			$('#display-area').append("<div id='content'></div>");
+			$('#content').css('height', pageheight);
+			$('#content').css('width', pagewidth);
+			
+			$.each(words, function(index, element){
+				$('#content').append(element+' ');
+				
+				if (element=="------------Page-Break------------")
+				{
+					var pagetext=words.slice(begin, index+1);
+					$('#book').append('<div contentEditable="true" spellcheck="true">'+pagetext.join(' ')+'</div>');
+					begin=index+1;
+					$('#content').empty();	
+				}
+
+				if ($('#content').prop('scrollHeight')>$('#content').prop('clientHeight'))
+				{	
+					var pagetext=words.slice(begin, index);
+					$('#book').append('<div contentEditable="true" spellcheck="true">'+pagetext.join(' ')+'</div>');
+					begin=index;
+					$('#content').empty();
+					$('#content').append(element+' ');
+					
+				}
+			
+			});
+
+			var pagetext=words.slice(begin, words.length);
+			$('#book').append('<div contentEditable="true" spellcheck="true">'+pagetext.join(' ')+'</div>');
+			$('#content').remove();
+			
+			$("#book").carouFredSel({
+			circular: false,
+			infinite: false,
+			items: {
+				visible: 2,
+				minimum: 0,
+			},
+			auto: false,
+			prev: "left",
+			next: "right"
+			});
+		
+		}
+
+	</script>
+	
+	<script type="text/javascript"> 
+        var loaded = false;        
+		//var editable = null;
+        function format(cmd, value)
+         {
+            if (!loaded) return true;
+			
+			if (value==" ------------Page-Break------------ ")
+			{	actions.push($('#book').html());
+				$('#book div').each(function(){
+					$(this).css("white-space","pre-wrap");
+				});
+				document.execCommand(cmd, false, value);
+				pagebreak();
+			}
+			else if (cmd=="undo")
+			{	
+				if (actions.length>0)
+				{
+					$('#book').empty().append(actions.pop());
+				}
+			}
+			else
+			{
+				actions.push($('#book').html());
+				document.execCommand(cmd, false, value);
+			}
+
+        }
+        function init()
+      {           
+            loaded = true;
+            //editable = document.getElementById('myContent');
+             //document.execCommand('styleWithCSS', false, true);
+        }
+
+       window.onload = init;
+     </script>
+	
+	<script>
+		$(function(){
+			$('#multiAccordion').multiAccordion({
+				active: [],
+				click: function(event, ui) {
+					//console.log('clicked')
+				},
+				init: function(event, ui) {
+					//console.log('whoooooha')
+				},
+				tabShown: function(event, ui) {
+					//console.log('shown')
+				},
+				tabHidden: function(event, ui) {
+					//console.log('hidden')
+				}
+				
+			});
+		});
+	
+		$("#bgcolour").spectrum({
+		color: "#ECC",
+		showInput: true,
+		className: "full-spectrum",
+		showInitial: true,
+		showPalette: true,
+		showSelectionPalette: true,
+		maxPaletteSize: 10,
+		preferredFormat: "hex",
+		localStorageKey: "spectrum.demo",
+		move: function (color) {
+			$('#bookarea').css("background-color", color.toHexString());
+		},
+		show: function () {
+		
+		},
+		beforeShow: function () {
+		
+		},
+		hide: function (color) {
+			$('#bookarea').css("background-color", color.toHexString());
+		},
+		
+		palette: [
+			["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)", "rgb(153, 153, 153)","rgb(183, 183, 183)",
+			"rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(239, 239, 239)", "rgb(243, 243, 243)", "rgb(255, 255, 255)"],
+			["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
+			"rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"], 
+			["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)", 
+			"rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)", 
+			"rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)", 
+			"rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)", 
+			"rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)", 
+			"rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
+			"rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+			"rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
+			"rgb(133, 32, 12)", "rgb(153, 0, 0)", "rgb(180, 95, 6)", "rgb(191, 144, 0)", "rgb(56, 118, 29)",
+			"rgb(19, 79, 92)", "rgb(17, 85, 204)", "rgb(11, 83, 148)", "rgb(53, 28, 117)", "rgb(116, 27, 71)",
+			"rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", 
+			"rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+		]
+});
+
+	$("#pagecolour").spectrum({
+		color: "#ECC",
+		showInput: true,
+		className: "full-spectrum",
+		showInitial: true,
+		showPalette: true,
+		showSelectionPalette: true,
+		maxPaletteSize: 10,
+		preferredFormat: "hex",
+		localStorageKey: "spectrum.demo",
+		move: function (color) {
+			$('#book div').css("background-color", color.toHexString());
+		},
+		show: function () {
+		
+		},
+		beforeShow: function () {
+		
+		},
+		hide: function (color) {
+			$('.turn-page').css("background-color", color.toHexString());
+		},
+		
+		palette: [
+			["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)", "rgb(153, 153, 153)","rgb(183, 183, 183)",
+			"rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(239, 239, 239)", "rgb(243, 243, 243)", "rgb(255, 255, 255)"],
+			["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
+			"rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"], 
+			["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)", 
+			"rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)", 
+			"rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)", 
+			"rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)", 
+			"rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)", 
+			"rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
+			"rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+			"rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
+			"rgb(133, 32, 12)", "rgb(153, 0, 0)", "rgb(180, 95, 6)", "rgb(191, 144, 0)", "rgb(56, 118, 29)",
+			"rgb(19, 79, 92)", "rgb(17, 85, 204)", "rgb(11, 83, 148)", "rgb(53, 28, 117)", "rgb(116, 27, 71)",
+			"rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", 
+			"rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+		]
+});
+	
+	
+	</script>
+
+	
+
+
+</body>
+</html>

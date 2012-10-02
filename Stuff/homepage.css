@@ -1,0 +1,51 @@
+body
+{
+	background-color: black;
+	margin:0;
+    padding:0;
+    border:0;
+    width:100%;
+    height:100%;
+}
+
+#heading-wrapper
+{
+	margin: 0 auto;
+	width: 100%;
+	height: 200px;
+	position: relative;
+}
+
+#heading
+{
+	width: 100%;
+	height: 100%;
+}
+
+#intro
+{
+	color: white;
+	margin: 0 auto;
+	width: 65%;
+}
+
+h1
+{
+	-webkit-margin-before: 1%;
+	-webkit-margin-after: 1%;
+}
+
+#links 
+{
+	margin: 0 auto;
+	width: 75%;
+	height: 250px;
+}
+
+#links a img
+{
+	float: left;
+	margin: 2% 7% 0 6%;
+	width:200px;
+	height: 200px;
+}
