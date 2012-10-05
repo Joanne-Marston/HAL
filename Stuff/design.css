@@ -79,8 +79,7 @@ body
 #content
 {
 	position: absolute;
-    top: -9999px;
-    left: -9999px;
+
 	overflow:hidden;
 }
 
@@ -98,4 +97,16 @@ body
     margin: 7px;
     display: block;
     float: left;
+}
+
+ul#grid li {
+  list-style: none outside;
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  
+  text-align: center;
+}
+ul#grid li img {
+  vertical-align: middle;
 }

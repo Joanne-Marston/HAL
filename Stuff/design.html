@@ -4,6 +4,8 @@
 	<link rel='stylesheet' href='scripts/spectrum/spectrum.css' />
 	<link rel="stylesheet" type="text/css" href="stylesheets/slidebook.css"/>
 	<link type="text/css" rel="stylesheet" href="scripts/jquery-multi-open-accordion/css/jquery-ui-1.8.9.custom/jquery-ui-1.8.9.custom.css" />
+	<link rel="stylesheet" type="text/css" href="scripts/fcbkListSelection/fcbkListSelection.css"/>
+	
 </head>
 
 <body>
@@ -37,7 +39,7 @@
 				</div>
 				<h3><a href="#">Pictures</a></h3>
 				<div>
-					<button onclick="format('insertimage', 'images/01.jpg')" >Insert picture</button>
+					<button onclick="insertpic()" >Insert picture</button>
 				</div>
 				<h3><a href="#">Pages</a></h3>
 				<div>
@@ -51,21 +53,90 @@
 					<button id="Load" onclick="display()">FlipBook</button>
 				</div>
 				<div id="bookarea">
-					<div id="book">
+					<div id="book" onmouseup="saveSelection();" onkeyup="saveSelection();">
 
 					</div>
 				</div>
-			
 		</div>
+		
 	</div>
 
 	<script type="text/javascript" src="scripts/jquery-1.8.1.min.js"></script>
 	<script type="text/javascript" src='scripts/spectrum/spectrum.js'></script>
-	<script type="text/javascript" src="scripts/jquery-multi-open-accordion/jquery-ui-1.8.13.custom.min.js"></script>
+	<script type="text/javascript" src="scripts/jquery-multi-open-accordion/jquery-ui-1.8.24.custom.min.js"></script>
 	<script type="text/javascript" src="scripts/jquery-multi-open-accordion/jquery.multi-accordion-1.5.3.js"></script>
 	<script type="text/javascript" src="scripts/carouFredSel-6.0.2/carouFredSel-6.0.2/jquery.carouFredSel-6.0.2.js"></script>
+	<script type="text/javascript" src='scripts/fcbkListSelection/fcbkListSelection.js'></script>
 	
 	<script>
+		var picture;
+		
+	
+		function insertpic()
+		{	$('body').append('<div id="random"><ul id="fcbklist"><li><img src="images/01.jpg"/><input type="hidden" name="fcbklist_value[]"/></li><li><img src="images/01.jpg"/><input type="hidden" name="fcbklist_value[]"/></li><li><img src="images/01.jpg"/><input type="hidden" name="fcbklist_value[]"/></li><li><img src="images/01.jpg"/><input type="hidden" name="fcbklist_value[]"/></li><li><img src="images/01.jpg"/><input type="hidden" name="fcbklist_value[]"/></li><li><img src="images/01.jpg"/><input type="hidden" name="fcbklist_value[]"/></li></ul></div>');
+			$.fcbkListSelection("#fcbklist", 950, 200, 2);
+			$("#random").dialog(
+			{ 
+				height: 500, 
+				width: 1000,
+				modal: true,
+				title: "Choose a picture",
+				buttons: [
+				{
+					text: "Ok",
+					click: function() 
+					{
+						picture=$('.itemselected img').attr('src');
+						$(this).dialog("destroy");
+						restoreSelection();
+						format('insertimage', picture); 
+						pagebreak();
+						$('#random').remove();
+					}
+				}]
+			});
+			
+		}
+		
+		var savedRange,isInFocus;
+		
+		function saveSelection()
+		{
+			if(window.getSelection)//non IE Browsers
+			{
+				savedRange = window.getSelection().getRangeAt(0);
+			}
+			else if(document.selection)//IE
+			{ 
+				savedRange = document.selection.createRange();  
+			} 
+		}
+
+		function restoreSelection()
+		{
+			isInFocus = true;
+			document.getElementById("book").focus();
+			if (savedRange != null) {
+				if (window.getSelection)//non IE and there is already a selection
+				{
+					var s = window.getSelection();
+					if (s.rangeCount > 0) 
+						s.removeAllRanges();
+					s.addRange(savedRange);
+				}
+				else 
+					if (document.createRange)//non IE and no selection
+					{
+						window.getSelection().addRange(savedRange);
+					}
+					else 
+						if (document.selection)//IE
+						{
+							savedRange.select();
+						}
+			}
+		}
+	
 		var text;
 		var pageheight=500;
 		var pagewidth=500;
@@ -144,7 +215,7 @@
 			
 			$.each(words, function(index, element){
 				$('#content').append(element+' ');
-				
+				console.log(element);
 				if (element=="------------Page-Break------------")
 				{
 					var pagetext=words.slice(begin, index+1);
@@ -158,6 +229,7 @@
 					var pagetext=words.slice(begin, index);
 					$('#book').append('<div contentEditable="true" spellcheck="true">'+pagetext.join(' ')+'</div>');
 					begin=index;
+					alert("here");
 					$('#content').empty();
 					$('#content').append(element+' ');
 					
@@ -182,10 +254,7 @@
 			});
 		
 		}
-
-	</script>
-	
-	<script type="text/javascript"> 
+		
         var loaded = false;        
 		//var editable = null;
         function format(cmd, value)
