@@ -149,10 +149,14 @@
 		function display()
 		{
 			createpages();
+			
 		}
 		
 		function createpages()
 		{
+			
+			
+		
 			var words=text.split(' ');
 			var begin=0;
 			var numpages;
@@ -198,18 +202,27 @@
 		function pagebreak()
 		{
 			var newtext="";
+			var words=new Array();
 			
 			$('#book div').each(function(){
-				newtext=newtext +" "+$(this).html();
+				$(this).contents().each(function(index, element){
+					if (element.nodeType == "3")
+					{
+						$.merge(words, (element.nodeValue).split(" "));
+					}
+					else
+					{
+						words.push(element.outerHTML);
+					}
+				});
 			});
 			
 			$('#book').empty();
 			
-			var words=newtext.split(' ');
 			var begin=0;
 			var numpages;
 			
-			$('#display-area').append("<div id='content'></div>");
+			$('#display-area').append("<div id='content' contentEditable='true'></div>");
 			$('#content').css('height', pageheight);
 			$('#content').css('width', pagewidth);
 			
