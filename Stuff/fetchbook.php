@@ -1,11 +1,22 @@
 <?php
+$book=$_POST["book"];
 
-$file=fopen($_GET["book"],"r") or exit("Unable to open file!");
-while(!feof($file))
+$file=fopen($book,"r") or exit("Unable to open file!");
+
+if (substr($book, 0, 3)==="raw")
 {
-	echo fgets($file);
-	echo  ' <br/> ';
+	while(!feof($file))
+	{
+		echo fgets($file);
+		echo  ' <br/> ';
+	}
 }
-
+else
+{
+	while(!feof($file))
+	{
+		echo fgets($file);
+	}
+}
 fclose($file);
 ?>

@@ -1,9 +1,17 @@
 #flipbook{
 	position: absolute;
 	margin: 20px auto;
-    width: 1000px;
-    height: 90%;
+    width: 1060px;
+    height: 530px;
 }
 #flipbook .turn-page{
-    background-color:#ccc;
+    background-color: white;
+
+}
+
+.page{
+	width: 500px;
+	height: 500px;
+    border: 5px solid #ccc;
+    padding: 10px;
 }
